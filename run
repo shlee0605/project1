@@ -1,0 +1,8 @@
+spark-submit --class edu.duke.yarn.Main \
+    --master yarn-cluster \
+    --num-executors 2 \
+    --driver-memory 1g \
+    --executor-memory 1g \
+    --executor-cores 1 \
+    --queue default \
+    target/scala-2.10/516-worflow_2.10-1.0.jar

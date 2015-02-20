@@ -7,7 +7,7 @@ import org.apache.spark.sql.SQLContext
 import java.sql.Date
 
 //define schema
-case class Order(order_id: toInt, buyer_id: Int, create_dt: Date)
+case class Order(order_id: Int, buyer_id: Int, create_dt: Date)
 case class Item(item_id: Int, order_id: Long, goods_id: Int, goods_number: Int, goods_price: Float, goods_amount: Float)
 
 class Query(sc: SparkContext, sqlContext: SQLContext) {

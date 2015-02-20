@@ -15,7 +15,7 @@ object Main {
 
     val wf = new Query(sc, sqlContext)
     wf.prepare()
-    wf.run()
+    wf.runQuery()
 
     sc.stop()
   }

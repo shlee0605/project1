@@ -7,7 +7,7 @@ import org.apache.spark.sql.SQLContext
 import java.sql.Date
 
 //define schema
-case class Order(order_id: Int, buyer_id: Int, create_dt: Date)
+case class Order(order_id: toInt, buyer_id: Int, create_dt: Date)
 case class Item(item_id: Int, order_id: Long, goods_id: Int, goods_number: Int, goods_price: Float, goods_amount: Float)
 
 class Query(sc: SparkContext, sqlContext: SQLContext) {
@@ -28,10 +28,13 @@ class Query(sc: SparkContext, sqlContext: SQLContext) {
 
   //run e-commerce queries
   def runQuery() {
-    val results1 = sql("select * from orders limit 10")
-    val results2 = sql("select * from items limit 10")
 
-    results.collect().foreach(println)
-    results2.collect().foreach(println)
+    val scan = sqlContext.sql("select goods_price,goods_amount from items where goods_amount > 224000 limit 10")
+    val aggregation = sqlContext.sql("select goods_id, sum(goods_number) from items group by goods_id limit 10")
+    val join = sqlContext.sql("select orders.buyer_id, sum(items.goods_amount) as total from items join orders on items.order_id = orders.order_id group by orders.buyer_id")
+
+    scan.collect().foreach(println)
+    aggregation.collect().foreach(println)
+    join.collect().foreach(println)
   }
 }

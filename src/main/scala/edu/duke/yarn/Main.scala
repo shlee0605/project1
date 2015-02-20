@@ -4,27 +4,19 @@ import java.io._
 
 // SparkConf
 import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.sql.hive.HiveContext
-
-
+import org.apache.spark.sql.SQLContext
+import java.sql.Date
 object Main {
 
   def main(args: Array[String]) {
-    val conf = new SparkConf().setAppName("test").setMaster("local")
-    conf.set("spark.executor.instances", "5")
-    conf.set("spark.yarn.queue", "default")
-    conf.setJars(Seq("target/scala-2.10/516-worflow-assembly-1.0.jar"))
-
+    val conf = new SparkConf().setAppName("E-Commerce")
     val sc = new SparkContext(conf)
-    val hc = new HiveContext(sc)
+    val sqlContext = new SQLContext(sc)
 
-    import hc._
-
-    val wf = new Query(hc)
-    wf.cleanUp()
+    val wf = new Query(sc, sqlContext)
     wf.prepare()
     wf.run()
 
-    System.exit(0)
+    sc.stop()
   }
 }

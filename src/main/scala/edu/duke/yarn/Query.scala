@@ -3,35 +3,35 @@ package edu.duke.yarn
 import org.apache.spark.{ SparkConf, SparkContext }
 import org.apache.spark.sql.hive.HiveContext
 
-class Query(hc: HiveContext) {
+import org.apache.spark.sql.SQLContext
+import java.sql.Date
+
+//define schema
+case class Order(order_id: Int, buyer_id: Int, create_dt: Date)
+case class Item(item_id: Int, order_id: Long, goods_id: Int, goods_number: Int, goods_price: Float, goods_amount: Float)
+
+class Query(sc: SparkContext, sqlContext: SQLContext) {
+  //prepare the table before run the queries
   def prepare() {
-    val itemPath = "hdfs://localhost:9000/e-commerce/order"
-    val orderPath = "hdfs://localhost:9000/e-commerce/item"
+    import sqlContext._
 
-    val dropOrder = "DROP TABLE order"
-    val dropItem = "DROP TABLE item"
+    val orderPath = "hdfs://localhost:9000/e-commerce/order"
+    val itemPath = "hdfs://localhost:9000/e-commerce/item"
 
-    hc.hql(dropOrder)
-    //hc.hql(dropItem)
+    val order = sc.textFile(orderPath).map(_.split("\\|")).map(o => Order(o(0).trim.toInt, o(1).trim.toInt, Date.valueOf(o(2))))
+    order.registerTempTable("orders")
 
-    val createOrder = "create external table order" +
-      "(" +
-      "order_id int," +
-      "buyer_id int," +
-      "create_dt timestamp" +
-      ")" +
-      "row format delimited fields terminated by \'|\' " + "\n" +
-      "location " + "\'" + itemPath + "\'"
-    hc.hql(createOrder)
+    val item = sc.textFile(itemPath).map(_.split("\\|")).map(o => Item(o(0).trim.toInt, o(1).trim.toLong, o(2).trim.toInt, o(3).trim.toInt, o(4).trim.toFloat, o(5).trim.toFloat))
+    item.registerTempTable("items")
+
   }
 
-  def cleanUp() {
-    hc.hql("DROP TABLE IF EXISTS order")
-    //hc.hql("DROP TABLE IF EXISTS item")
-  }
+  //run e-commerce queries
+  def runQuery() {
+    val results1 = sql("select * from orders limit 10")
+    val results2 = sql("select * from items limit 10")
 
-  def run() {
-    val results = hc.hql("select * from order limit 10")
     results.collect().foreach(println)
+    results2.collect().foreach(println)
   }
 }

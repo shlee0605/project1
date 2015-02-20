@@ -1,8 +1,6 @@
 package edu.duke.yarn
 
-import org.apache.spark.{ SparkConf, SparkContext }
-import org.apache.spark.sql.hive.HiveContext
-
+import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.SQLContext
 import java.sql.Date
 
@@ -23,12 +21,10 @@ class Query(sc: SparkContext, sqlContext: SQLContext) {
 
     val item = sc.textFile(itemPath).map(_.split("\\|")).map(o => Item(o(0).trim.toInt, o(1).trim.toLong, o(2).trim.toInt, o(3).trim.toInt, o(4).trim.toFloat, o(5).trim.toFloat))
     item.registerTempTable("items")
-
   }
 
   //run e-commerce queries
   def runQuery() {
-
     val scan = sqlContext.sql("select goods_price,goods_amount from items where goods_amount > 224000 limit 10")
     val aggregation = sqlContext.sql("select goods_id, sum(goods_number) from items group by goods_id limit 10")
     val join = sqlContext.sql("select orders.buyer_id, sum(items.goods_amount) as total from items join orders on items.order_id = orders.order_id group by orders.buyer_id")

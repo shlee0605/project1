@@ -1,8 +1,5 @@
 package edu.duke.yarn
 
-import java.io._
-
-// SparkConf
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.SQLContext
 import java.sql.Date

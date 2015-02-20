@@ -1,17 +1,21 @@
 Workflow for Project1
 ===============
-1. Move data to the hdfs
+Download Spark-1.2.1 from [here](http://www.apache.org/dyn/closer.cgi/spark/spark-1.2.1/spark-1.2.1-bin-hadoop2.4.tgz)
+
+Put Spark's /bin folder to the path
+
+Move data to the hdfs
 ```sh
 hdfs dfs -copyFromLocal input/order.txt /e-commerce/order/order.txt
 hdfs dfs -copyFromLocal input/item.txt /e-commerce/item/item.txt
 ```
 
-2. Compile the code
+Compile the code
 ```sh
 sbt/sbt package
 ```
 
-3. Submit this job to the yarn cluster
+Submit this job to the yarn cluster
 ```sh
 ./run
 ```

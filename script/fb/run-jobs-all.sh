@@ -1,5 +1,4 @@
 #!/bin/bash
-rm -r logs/fb
 mkdir logs/fb
 script/fb/run-job-0.sh &
 sleep 24

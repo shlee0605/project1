@@ -1,4 +1,3 @@
-rm -r logs/interactive
 mkdir logs/interactive
 
 script/interactive/interactive_1.sh &

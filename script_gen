@@ -1,0 +1,1 @@
+java -jar jar/script_gen.jar conf/FB-2009_samplesKMBySort_24_times_1hr_0.tsv 600 3 67108864 10 script/fb workGenInput workGenOutputTest 67108864 logs/fb hadoop jar/WorkGen.jar 'conf/workGenKeyValue_conf.xsl'

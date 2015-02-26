@@ -1,5 +1,6 @@
-rm -r logs/interactive
-mkdir logs/interactive
+rm -r logs
+mkdir logs
 
 # run interactive queries
-script/run_interactive.sh &
+script/interactive/run_interactive.sh &
+script/fb/run-jobs-all.sh &

@@ -1,1 +1,1 @@
-workGenInput/part-00008,workGenInput/part-00009
+workGenInput/part-00006,workGenInput/part-00007

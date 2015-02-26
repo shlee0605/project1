@@ -3,4 +3,9 @@ mkdir logs
 
 # run interactive queries
 script/interactive/run_interactive.sh &
-script/fb/run-jobs-all.sh &
+
+# run fb workload
+mkdir logs/fb
+cd script/fb
+./run-jobs-all.sh &
+cd -

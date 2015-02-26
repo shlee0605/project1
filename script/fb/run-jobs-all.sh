@@ -1,16 +1,17 @@
 #!/bin/bash
-mkdir logs/fb
-script/fb/run-job-0.sh &
+rm -r workGenLogs
+mkdir workGenLogs
+./run-job-0.sh &
 sleep 24
-# script/fb/run-job-1.sh &
-# sleep 49
-# script/fb/run-job-2.sh &
+./run-job-1.sh &
+sleep 49
+./run-job-2.sh &
 # sleep 52
-# script/fb/run-job-3.sh &
+# ./run-job-3.sh &
 # sleep 21
-# script/fb/run-job-4.sh &
+# ./run-job-4.sh &
 # sleep 75
-# script/fb/run-job-5.sh &
+# ./run-job-5.sh &
 # sleep 11
 # ./run-job-6.sh &
 # sleep 141
@@ -70,8 +71,6 @@ sleep 24
 # sleep 25
 # ./run-job-34.sh &
 # sleep 21
-
-
 # max input 51373955
 # inputPartitionSize 57303500
 # inputPartitionCount 10

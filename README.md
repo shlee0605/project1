@@ -10,9 +10,9 @@ hdfs dfs -copyFromLocal input/order.txt /e-commerce/order/order.txt
 hdfs dfs -copyFromLocal input/item.txt /e-commerce/item/item.txt
 ```
 
-Compile the code
+Prepare data for FB workload
 ```sh
-sbt/sbt package
+./datagen_fb
 ```
 
 Submit this job to the yarn cluster

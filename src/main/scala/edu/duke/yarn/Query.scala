@@ -10,16 +10,16 @@ case class Item(item_id: Int, order_id: Long, goods_id: Int, goods_number: Int, 
 
 class Query(sc: SparkContext, sqlContext: SQLContext) {
   //prepare the table before run the queries
-  def prepare() {
-    import sqlContext._
+  def prepare(host: String) {
+    import sqlContext.implicits._
 
-    val orderPath = "hdfs://localhost:9000/e-commerce/order"
-    val itemPath = "hdfs://localhost:9000/e-commerce/item"
+    val orderPath = "hdfs://" + host + ":9000/e-commerce/order"
+    val itemPath = "hdfs://" + host + ":9000/e-commerce/item"
 
-    val order = sc.textFile(orderPath).map(_.split("\\|")).map(o => Order(o(0).trim.toInt, o(1).trim.toInt, Date.valueOf(o(2))))
+    val order = sc.textFile(orderPath).map(_.split("\\|")).map(o => Order(o(0).trim.toInt, o(1).trim.toInt, Date.valueOf(o(2)))).toDF()
     order.registerTempTable("orders")
 
-    val item = sc.textFile(itemPath).map(_.split("\\|")).map(o => Item(o(0).trim.toInt, o(1).trim.toLong, o(2).trim.toInt, o(3).trim.toInt, o(4).trim.toFloat, o(5).trim.toFloat))
+    val item = sc.textFile(itemPath).map(_.split("\\|")).map(o => Item(o(0).trim.toInt, o(1).trim.toLong, o(2).trim.toInt, o(3).trim.toInt, o(4).trim.toFloat, o(5).trim.toFloat)).toDF()
     item.registerTempTable("items")
   }
 

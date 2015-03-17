@@ -9,9 +9,10 @@ object Join {
     val conf = new SparkConf().setAppName("E-Commerce")
     val sc = new SparkContext(conf)
     val sqlContext = new SQLContext(sc)
+    val host = args(0)
 
     val wf = new Query(sc, sqlContext)
-    wf.prepare()
+    wf.prepare(host)
     wf.runJoin()
 
     sc.stop()
@@ -23,9 +24,10 @@ object Aggregation {
     val conf = new SparkConf().setAppName("E-Commerce")
     val sc = new SparkContext(conf)
     val sqlContext = new SQLContext(sc)
+    val host = args(0)
 
     val wf = new Query(sc, sqlContext)
-    wf.prepare()
+    wf.prepare(host)
     wf.runAggregation()
 
     sc.stop()
@@ -37,9 +39,10 @@ object Scan {
     val conf = new SparkConf().setAppName("E-Commerce")
     val sc = new SparkContext(conf)
     val sqlContext = new SQLContext(sc)
+    val host = args(0)
 
     val wf = new Query(sc, sqlContext)
-    wf.prepare()
+    wf.prepare(host)
     wf.runScan()
 
     sc.stop()

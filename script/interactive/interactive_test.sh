@@ -11,4 +11,4 @@ $SPARK_HOME/bin/spark-submit --class edu.duke.yarn.Scan \
     --executor-memory $emem  \
     --executor-cores 1 \
     --queue $QUEUE \
-    /Users/shlee0605/bigdata/project1/jar/interactive.jar
+    /home/hadoop/project1/jar/interactive.jar

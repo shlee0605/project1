@@ -11,4 +11,4 @@ $SPARK_HOME/bin/spark-submit --class edu.duke.yarn.Scan \
     --executor-memory $emem  \
     --executor-cores 1 \
     --queue $QUEUE \
-    /home/hadoop/project1/jar/interactive_emr.jar ip-10-145-227-241.ec2.internal
+    /home/hadoop/project1/jar/interactive_emr.jar $HOST 

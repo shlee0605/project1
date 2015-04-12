@@ -26,14 +26,15 @@ class Query(sc: SparkContext, sqlContext: SQLContext) {
   //run e-commerce queries
   def runJoin() {
     val join = sqlContext.sql("select orders.buyer_id, sum(items.goods_amount) as total from items join orders on items.order_id = orders.order_id group by orders.buyer_id limit 10")
-    join.collect
+    join.saveAsTextFile("hdfs://localhost:9000/result-join")
   }
 
   def runScan() {
-    val scan = sqlContext.sql("select goods_price,goods_amount from items where goods_amount > 224000").collect
+    val scan = sqlContext.sql("select goods_price,goods_amount from items where goods_amount > 224000")
+    scan.saveAsTextFile("hdfs://localhost:9000/result-scan")
   }
 
   def runAggregation() {
-    val aggregation = sqlContext.sql("select goods_id, sum(goods_number) from items group by goods_id").collect
+    val aggregation = sqlContext.sql("select goods_id, sum(goods_number) from items group by goods_id")
   }
 }
